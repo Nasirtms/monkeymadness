@@ -15,12 +15,20 @@
         justify-content: center;
         flex-direction: column;
         gap: 16px;
-        background: rgba(0,0,0,0.92);
+        background: #000;
         color: #fff;
         z-index: 9999;
         text-align: center;
         padding: 24px;
         box-sizing: border-box;
+      }
+      /* Portrait on mobile: only the rotate hint is visible; WebGL stays running but hidden. */
+      #unity-container.portrait-rotate-hint #unity-canvas,
+      #unity-container.portrait-rotate-hint #unity-loading-bar,
+      #unity-container.portrait-rotate-hint #unity-warning {
+        visibility: hidden;
+        pointer-events: none;
+        opacity: 0;
       }
       #rotate-overlay img {
         width: min(140px, 40vw);
@@ -162,15 +170,18 @@
         if (!isMobile()) {
           rotateOverlay.style.display = "none";
           rotateOverlay.setAttribute("aria-hidden", "true");
+          container.classList.remove("portrait-rotate-hint");
           return;
         }
 
         if (isPortrait()) {
           rotateOverlay.style.display = "flex";
           rotateOverlay.setAttribute("aria-hidden", "false");
+          container.classList.add("portrait-rotate-hint");
         } else {
           rotateOverlay.style.display = "none";
           rotateOverlay.setAttribute("aria-hidden", "true");
+          container.classList.remove("portrait-rotate-hint");
         }
       };
 
